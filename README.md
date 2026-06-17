@@ -15,14 +15,6 @@ An AI agent that guides users through checking whether their foreign driving lic
 - An IBM Cloud account ([sign up for free](https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753))
 - A web browser
 
-## Repo contents
-
-| File / Folder | Description |
-|---|---|
-| [`license-swap-eligibility-lab.md`](license-swap-eligibility-lab.md) | Full step-by-step lab guide |
-| [`sample-licenses/`](sample-licenses/) | Sample license images for use during the lab |
-| [`assets/images/`](assets/images/) | Screenshots used throughout the lab guide |
-
 ## Get started
 
 Open the lab guide: **[license-swap-eligibility-lab.md](license-swap-eligibility-lab.md)**
