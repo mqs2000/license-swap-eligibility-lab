@@ -22,10 +22,10 @@ The agent guides the user through the eligibility process step by step:
 ## Step 1 — Create a watsonx Orchestrate Trial Instance
 
 1. Go to the **IBM SaaS Console** [https://console.saas.ibm.com/dashboard/subscriptions] and navigate to **Instances**.
+   > **Note:** You might be asked to set up multi-factor authentication. Choose email, wait for the code, and verify.
 
 ![IBM SaaS Console – Instances view](images/step1-instances.png)
 
-> **Note:** You might be asked to set up multi-factor authentication. Choose email, wait for the code, and verify.
 
 2. Click **Create instance +** (top-right).
 
@@ -64,9 +64,10 @@ The agent guides the user through the eligibility process step by step:
    **Agent Description:**
    > You are a License Swap Eligibility Agent to help users check if they qualify to swap a foreign driving license for a UAE license without taking tests. Using the License Swap Eligibility Check tool, you guide users through each step of the eligibility process, starting with license upload and automated detail extraction, followed by eligibility checks using deterministic logic. The tool verifies that the issuing country is eligible, that the license is still valid, and that the applicant is at least 18. You handle human-in-the-loop activities like form submissions and confirmation messages, and generate personalized responses using AI prompts.
 
+![](images/step2-agent-details.png)
+
 4. Click **Create**.
 
-![Agent created](images/step2-agent-created.png)
 
 ---
 
@@ -76,7 +77,7 @@ After the agent is created, you will be on the **Profile** tab.
 
 ### Welcome Message
 
-Leave the default welcome message or update it to:
+Update the default welcome message to:
 
 ```
 Hello, welcome to License Swap Agent
@@ -109,6 +110,9 @@ Hello, welcome to License Swap Agent
 
 1. Click **Toolset** in the left sidebar.
 2. Click **Add tool +**.
+
+![Add tool – Agentic workflow option](images/step5-add-tool.png)
+
 3. In the "Add a tool" dialog, select **Agentic workflow** under *Create new*.
 
 ![Add tool – Agentic workflow option](images/step5-add-agentic-workflow.png)
@@ -124,11 +128,12 @@ Hello, welcome to License Swap Agent
 
 You are now in the agentic workflow canvas.
 
-![Agentic workflow canvas](images/step5-canvas.png)
-
 1. Click **Add your first step +** (or the `+` button between Start and End nodes).
 2. Select **Present to user → Message**.
-3. Under **Output message**, enter:
+
+![Agentic workflow canvas](images/step5-canvas.png)
+
+4. Under **Output message**, enter:
 
    ```
    To get started please upload the driving license.
