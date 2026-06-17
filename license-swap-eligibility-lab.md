@@ -212,7 +212,7 @@ Path 1 will route users whose nationality does **not** qualify for a license swa
 ![Workflow canvas overview](images/step5-Edit-condition.png)
 
 3. Click **+**.
-4. Flow Variables → **Document extractor** → `nationality`
+4. **Document extractor** → `nationality`
 
 ![Workflow canvas overview](images/step5-Edit-condition-details.png)
      
