@@ -253,20 +253,20 @@ Path 1 uses a **Generative prompt** to produce a personalised not-eligible respo
 6. **User prompt:**
 
    ```
-Generate a message using the following details:
-Full Name: {self.input.full_name}
-Nationality: {self.input.nationality}
-
-
-The message should:
-- Start with a greeting addressing the customer by their full name.
-- Politely inform the customer that, based on their details, they are not eligible for a license swap at this time.
-- Advise the customer to contact or visit the center for further assistance and to discuss available options.
-- Avoid stating a specific reason for ineligibility.
-- Do NOT include a reference number.
-- Do NOT confirm any request as submitted.
-- Maintain a respectful and supportive tone.
-- End with the company name: Road and Transportation Authority.
+   Generate a message using the following details:
+   Full Name: {self.input.full_name}
+   Nationality: {self.input.nationality}
+   
+   
+   The message should:
+   - Start with a greeting addressing the customer by their full name.
+   - Politely inform the customer that, based on their details, they are not eligible for a license swap at this time.
+   - Advise the customer to contact or visit the center for further assistance and to discuss available options.
+   - Avoid stating a specific reason for ineligibility.
+   - Do NOT include a reference number.
+   - Do NOT confirm any request as submitted.
+   - Maintain a respectful and supportive tone.
+   - End with the company name: Road and Transportation Authority.
    ```
 
 7. Click **Generate Preview** to verify the output looks correct.
