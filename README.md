@@ -1,6 +1,6 @@
 # License Swap Eligibility Agent — IBM watsonx Orchestrate Lab
 
-A hands-on lab developed by **IBM** for **watsonx Orchestrate (WXO)**.
+A hands-on lab for **IBM watsonx Orchestrate (WXO)**.
 
 ## What you'll build
 
