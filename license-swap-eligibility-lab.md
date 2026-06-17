@@ -120,8 +120,6 @@ Hello, welcome to License Swap Agent
 4. When prompted to name the workflow, enter: `License Swap Eligibility Check`
 5. Click **Start building**.
 
-![Workflow name and Start building](images/step5-start-building.png)
-
 ---
 
 ### 5.2 Workflow Step 1 — Display a Welcome Message
