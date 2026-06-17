@@ -197,13 +197,11 @@ You are now in the agentic workflow canvas.
 1. Click the **+** button below the Document extractor node.
 2. Select **Add a flow control → Branch**.
 
+![Workflow canvas overview](images/step5-Branch.png)
+
    A **Branch 1** diamond node appears with two default paths:
    - **Path 1** (if condition)
    - **Path 2** (default / else)
-
-Your canvas should now look like this:
-
-![Workflow canvas overview](images/step5-canvas-overview.png)
 
 ---
 
@@ -212,65 +210,62 @@ Your canvas should now look like this:
 Path 1 will route users whose nationality does **not** qualify for a license swap.
 
 1. Click on **Branch 1**, then click **Edit condition** next to **Path 1**.
-2. Switch to the **Condition builder** view (grid icon).
-3. Click **Add condition +**.
-4. Set the first condition row:
-   - Variable: click the variable picker → **Document extractor** → `nationality`
+2. Click **+**.
+3. 
+   - Flow Variables → **Document extractor** → `nationality`
    - Operator: `==`
    - Value: `Cameroonian`
-5. Click **Add condition +** again, change the logical operator to **or**, and add:
+  
+![Workflow canvas overview](images/step5-Branch.png)
+
+4. Click **+** again, change the logical operator to **or**, and add:
    - `nationality == Indian`
-6. Repeat to add:
+
+![Workflow canvas overview](images/step5-Branch.png)
+
+5. Repeat to add:
    - `nationality == Pakistani`
    - `nationality == Nigerian`
-
-   > Add all nationalities that are **not** eligible for the UAE license swap scheme in the same way.
-
-   **Tip:** You can also use the **Expression editor** (`</>` button) and write the full condition directly:
-
-   ```javascript
-   flow["Document extractor"].output.nationality == "Cameroonian" or
-   flow["Document extractor"].output.nationality == "Indian" or
-   flow["Document extractor"].output.nationality == "Pakistani" or
-   flow["Document extractor"].output.nationality == "Nigerian"
-   ```
-
-7. Click **Back** to return to the branch overview.
 
 ---
 
 ### 5.7 Add a Generative Prompt for the Not-Eligible Path (Path 1)
 
-Instead of a plain message, Path 1 uses a **Generative prompt** to produce a personalised not-eligible response.
+Path 1 uses a **Generative prompt** to produce a personalised not-eligible response.
 
 1. In Path 1, click the **+** icon to add a step.
 2. Select **Add a flow activity → Generative prompt**.
-3. Rename it to `Generative prompt neg` (click the node name to edit).
+3. Rename it to `Not-Eligible prompt` (click the node name to edit).
 4. In the configuration panel:
 
    **System prompt:**
    ```
-   You are an assistant that generates a polite not-eligible message for a license swap application. Your task is to inform the user that their nationality does not qualify for a UAE license swap and advise them to visit a branch. Do not provide instructions or code, only return the final text output.
+   You are an assistant that generates the final confirmation message for a license swap application. Your task is to take the provided user details (license number, full name, date of birth, nationality, date of issue, and date of expiration) and produce a complete, ready-to-send message. Do not provide instructions or code, only return the final text output.
    ```
 
 5. Add the following **inputs** by clicking **Add +** → **String** for each:
    - `full_name` — map to `Document extractor → full_name`
    - `nationality` — map to `Document extractor → nationality`
 
+![Workflow canvas overview](images/step5-Branch.png)
+
 6. **User prompt:**
 
    ```
-   Generate a polite not-eligible message using the following details:
+   Generate a message using the following details:
+Full Name: {self.input.full_name}
+Nationality: {self.input.nationality}
 
-   Full Name: {full_name}
 
-   Nationality: {nationality}
-
-   The message should:
-   - Address the customer by their full name.
-   - State that their nationality is not eligible for a UAE license swap.
-   - Advise them to visit the nearest RTA branch for further assistance.
-   - End with the company name: Road and Transportation Authority.
+The message should:
+- Start with a greeting addressing the customer by their full name.
+- Politely inform the customer that, based on their details, they are not eligible for a license swap at this time.
+- Advise the customer to contact or visit the center for further assistance and to discuss available options.
+- Avoid stating a specific reason for ineligibility.
+- Do NOT include a reference number.
+- Do NOT confirm any request as submitted.
+- Maintain a respectful and supportive tone.
+- End with the company name: Road and Transportation Authority.
    ```
 
 7. Click **Generate Preview** to verify the output looks correct.
@@ -278,27 +273,30 @@ Instead of a plain message, Path 1 uses a **Generative prompt** to produce a per
 
 ---
 
-### 5.8 Configure Path 2 (Default) — Generate Confirmation Message
+### 5.8 Configure Path 2 (Default) — Eligible Path
 
 Path 2 (the default/else path) handles eligible nationalities. Here you will add a **Generative prompt** to compose a personalised confirmation message.
 
 1. In Path 2, click **+** to add a step.
 2. Select **Add a flow activity → Generative prompt**.
-3. In the Generative prompt configuration:
+3. Rename it to `Eligible prompt` (click the node name to edit).
+4. In the Generative prompt configuration:
 
    **System prompt:**
    ```
    You are an assistant that generates the final confirmation message for a license swap application. Your task is to take the provided user details (license number, full name, date of birth, nationality, date of issue, and date of expiration) and produce a complete, ready-to-send message. Do not provide instructions or code, only return the final text output.
    ```
 
-4. Add the following **inputs** by clicking **Add +** → **String** for each:
+5. Add the following **inputs** by clicking **Add +** → **String** for:
    - `full_name` — map to `Document extractor → full_name`
    - `nationality` — map to `Document extractor → nationality`
+
+   **Add +** → **date** for:
    - `issue_date` — map to `Document extractor → date_of_issue`
    - `expiry_date` — map to `Document extractor → date_of_expiration`
    - `birth_date` — map to `Document extractor → date_of_birth`
 
-5. **User prompt:**
+6. **User prompt:**
 
    ```
    Generate a confirmation message using the following details:
@@ -321,40 +319,40 @@ Path 2 (the default/else path) handles eligible nationalities. Here you will add
    - End with the company name: Road and Transportation Authority.
    ```
 
-6. Click **Generate Preview** to verify the output looks correct.
-7. Close the Generative prompt panel.
+7. Click **Generate Preview** to verify the output looks correct.
+8. Close the Generative prompt panel.
 
 ---
 
-### 5.9 Map Both Generative Prompts to the End Node
+### 5.9 Map Both Generative Prompts to the Output Node
 
-Both paths feed into a single **End** node. You need to map each generative prompt's output to a named output variable.
+Both paths feed into a single **Output** node. You need to map each generative prompt's output to a named output variable.
 
-1. Click the **End** node on the canvas.
-2. In the **Map data for 'End'** panel that opens, you will see two output fields: `result` and `result_neg`.
-3. Map them as follows:
-   - `result` → click the variable picker and select **Generative prompt → value**
-   - `result_neg` → click the variable picker and select **Generative prompt neg → value**
+1. Click the **Output** node on the canvas.
+2. Click **Add** → **String**:
+   - Name: Eligible.
+   - Click **Add**
 
-![Map data for End – output mapping](images/step5-map-outputs.png)
+   ![Map data for End – output mapping](images/step5-map-outputs.png)
+   
+4. Repeat the same thing for Not-Eligible output Click **Add** → **String**:
+   - Name: Not-Eligible.
+   - Click **Add** 
 
-4. Click **Apply** (or close the panel — changes are saved automatically).
+5. Click **Edit data mapping**
+6. Click on **{x}** for Eligible
+   - From Flow Varibales choose **Eligbile** → **Value**.
+
+   ![Map data for End – output mapping](images/step5-map-outputs.png)
+   
+8. Do the same for Not-Eligible Click on **{x}**.
+   - From Flow Varibales choose **Not-Eligible** → **Value**.
 
 ---
 
-### 5.10 Save and Exit the Workflow
+### 5.10 Exit the Workflow
 
-1. Confirm the workflow shows **Saved** in the top bar.
-2. Click **Done** (top-right) to return to the agent configuration.
-
----
-
-## Step 6 — Attach the Workflow Tool to the Agent
-
-1. You should now be back on the **Toolset** page of the agent.
-2. Click **Add tool +**.
-3. In the "Add a tool" dialog, select **Agentic workflow** → then from the existing workflows list, select **License Swap Eligibility Check**.
-4. Confirm the tool is now listed under **Tools**.
+1. Click **Done** (top-right) to return to the agent configuration.
 
 ---
 
