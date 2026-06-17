@@ -11,28 +11,34 @@ The agent guides the user through the eligibility process step by step:
 3. Applies deterministic eligibility logic via a Branch condition
 4. Returns a personalised confirmation message (eligible) or a branch-visit message (not eligible)
 
-
-
 ---
 
 ## Prerequisites
 
-- An IBM Cloud account (or the ability to start a free trial)
-- A web browser
+- An IBM Cloud account you can get one here -> https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753
 
 ---
 
 ## Step 1 — Create a watsonx Orchestrate Trial Instance
 
-1. Go to the **IBM SaaS Console** and navigate to **Subscriptions**.
-2. You should see a **watsonx Orchestrate** subscription with a *Trial – 30 days* badge.
-3. Click on the subscription, then click **Create instance +** (top-right).
-4. Fill in the instance details:
-   - **Cloud Provider:** AWS
-   - **Region:** N. Virginia (us-east-1)
-   - **Instance name:** `RTA_Bootcamp`
-5. Click **Create**.
-6. Once the instance status shows **Running**, click **Launch** to open watsonx Orchestrate.
+1. Go to the **IBM SaaS Console** [https://console.saas.ibm.com/dashboard/subscriptions] and navigate to **Instances**.
+
+![IBM SaaS Console – Instances view](images/step1-instances.png)
+
+> **Note:** You might be asked to set up multi-factor authentication. Choose email, wait for the code, and verify.
+
+2. Click **Create instance +** (top-right).
+
+![Create instance button](images/step1-create-instance-btn.png)
+
+3. Fill in / choose the instance details as follows:
+
+![Instance details form](images/step1-instance-details.png)
+
+4. Click **Create**.
+5. Once the instance status shows **Running**, click **Launch** to open watsonx Orchestrate.
+
+![Instance running – Launch button](images/step1-running-launch.png)
 
 > **Note:** If you see "Your account is not provisioned yet", wait a few minutes and then try launching again.
 
@@ -41,7 +47,13 @@ The agent guides the user through the eligibility process step by step:
 ## Step 2 — Create the Agent
 
 1. From the watsonx Orchestrate home screen, click **Create your agent**.
+
+![watsonx Orchestrate home – Create your agent](images/step2-create-agent.png)
+
 2. In the dialog, select **Create from scratch**.
+
+![Create from scratch dialog](images/step2-from-scratch.png)
+
 3. Enter the following details:
 
    | Field | Value |
@@ -54,6 +66,8 @@ The agent guides the user through the eligibility process step by step:
 
 4. Click **Create**.
 
+![Agent created](images/step2-agent-created.png)
+
 ---
 
 ## Step 3 — Configure the Agent Profile
@@ -65,14 +79,16 @@ After the agent is created, you will be on the **Profile** tab.
 Leave the default welcome message or update it to:
 
 ```
-Hello, welcome to watsonx Orchestrate
+Hello, welcome to License Swap Agent
 ```
 
 ### Quick Start Prompts
 
 1. Click **Add prompt +**.
 2. Enter: `Check License swap eligibility.`
-3. Save.
+3. Remove all the other prompts.
+
+![Quick start prompts configured](images/step3-quick-prompts.png)
 
 ---
 
@@ -83,7 +99,7 @@ Hello, welcome to watsonx Orchestrate
 
    > When the user requests to swap a foreign license for a UAE license, call the tool "License Swap Eligibility Check" and do not generate or display any additional output. The tool is fully responsible for handling the process and presenting the final response to the user. Your role is strictly to delegate the task to the tool. Do not repeat, summarize, or echo the tool's output, as it already includes the necessary user-facing messages.
 
-3. Save.
+![Behavior instructions configured](images/step4-behavior.png)
 
 ---
 
@@ -94,29 +110,44 @@ Hello, welcome to watsonx Orchestrate
 1. Click **Toolset** in the left sidebar.
 2. Click **Add tool +**.
 3. In the "Add a tool" dialog, select **Agentic workflow** under *Create new*.
+
+![Add tool – Agentic workflow option](images/step5-add-agentic-workflow.png)
+
 4. When prompted to name the workflow, enter: `License Swap Eligibility Check`
 5. Click **Start building**.
+
+![Workflow name and Start building](images/step5-start-building.png)
 
 ---
 
 ### 5.2 Workflow Step 1 — Display a Welcome Message
 
-You are now in the agentic workflow canvas. The flow starts with a **Start** node inside a User activity.
+You are now in the agentic workflow canvas.
+
+![Agentic workflow canvas](images/step5-canvas.png)
 
 1. Click **Add your first step +** (or the `+` button between Start and End nodes).
 2. Select **Present to user → Message**.
-3. In the right panel, under **Output message**, enter:
+3. Under **Output message**, enter:
 
    ```
    To get started please upload the driving license.
    ```
 
+![Welcome message node configured](images/step5-welcome-message.png)
+
 ---
 
-### 5.3 Workflow Step 2 — Collect the License File
+### 5.3 Workflow Step 2 — Create the File Upload Node
 
-1. Click the **+** button below the Message node (still inside the User activity).
+1. Click the **+** button below the Message node.
+
+![Plus button below Message node](images/step5-plus-below-message.png)
+
 2. Select **Collect from user → File upload**.
+
+![File upload node added](images/step5-file-upload.png)
+
 3. This adds a **File upload** step that lets the user attach their license image or PDF.
 
 ---
@@ -125,11 +156,19 @@ You are now in the agentic workflow canvas. The flow starts with a **Start** nod
 
 1. Click the **+** button **below** the User activity block (outside the green dashed box, on the main canvas).
 2. Select **Add a flow activity → Document extractor**.
+
+![Document extractor selected](images/step5-doc-extractor.png)
+
 3. When asked to select a document format, choose **Structured** (since a driving license has a consistent layout).
+
+![Structured format selected](images/step5-structured.png)
+
 4. Click **Define schema** in the Document extractor configuration panel.
 5. In the schema selection dialog, choose the predefined schema: **Driver license**.
 
-   This schema includes the following fields that will be automatically extracted:
+![Driver license schema selected](images/step5-driver-license-schema.png)
+
+   This schema includes the following fields that will be automatically extracted. Remove all fields that are not listed below:
 
    | Field | Type |
    |---|---|
@@ -140,9 +179,11 @@ You are now in the agentic workflow canvas. The flow starts with a **Start** nod
    | Date of issue | date |
    | Date of expiration | date |
 
-6. Click **Create**.
+6. Upload a sample license image on the right panel to test extraction before proceeding. Use the image `Training.png` provided in the repo.
 
-> You can optionally upload a sample license image on the right panel to test extraction before proceeding.
+![Sample license extraction test](images/step5-extraction-test.png)
+
+7. Click **Create**.
 
 ---
 
