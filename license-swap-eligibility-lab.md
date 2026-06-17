@@ -230,51 +230,7 @@ Path 1 will route users whose nationality does **not** qualify for a license swa
 
 ---
 
-### 5.7 Add a Generative Prompt for the Not-Eligible Path (Path 1)
-
-Path 1 uses a **Generative prompt** to produce a personalised not-eligible response.
-
-1. In Path 1, click the **+** icon to add a step.
-2. Select **Add a flow activity → Generative prompt**.
-3. Rename it to `Not-Eligible prompt` (click the node name to edit).
-4. In the configuration panel:
-
-   **System prompt:**
-   ```
-   You are an assistant that generates the final confirmation message for a license swap application. Your task is to take the provided user details (license number, full name, date of birth, nationality, date of issue, and date of expiration) and produce a complete, ready-to-send message. Do not provide instructions or code, only return the final text output.
-   ```
-
-5. Add the following **inputs** by clicking **Add +** → **String** for each:
-   - `full_name` — map to `Document extractor → full_name`
-   - `nationality` — map to `Document extractor → nationality`
-
-![Workflow canvas overview](images/step5-Not-Eligible-Path.png)
-
-6. **User prompt:**
-
-   ```
-   Generate a message using the following details:
-   Full Name: {self.input.full_name}
-   Nationality: {self.input.nationality}
-   
-   
-   The message should:
-   - Start with a greeting addressing the customer by their full name.
-   - Politely inform the customer that, based on their details, they are not eligible for a license swap at this time.
-   - Advise the customer to contact or visit the center for further assistance and to discuss available options.
-   - Avoid stating a specific reason for ineligibility.
-   - Do NOT include a reference number.
-   - Do NOT confirm any request as submitted.
-   - Maintain a respectful and supportive tone.
-   - End with the company name: Road and Transportation Authority.
-   ```
-
-7. Click **Generate Preview** to verify the output looks correct.
-8. Close the Generative prompt panel.
-
----
-
-### 5.8 Configure Path 2 (Default) — Eligible Path
+### 5.7 Configure Path 2 (Default) — Eligible Path
 
 Path 2 (the default/else path) handles eligible nationalities. Here you will add a **Generative prompt** to compose a personalised confirmation message.
 
@@ -329,6 +285,49 @@ Path 2 (the default/else path) handles eligible nationalities. Here you will add
 
 ---
 
+### 5.8 Add a Generative Prompt for the Not-Eligible Path (Path 1)
+
+Path 1 uses a **Generative prompt** to produce a personalised not-eligible response.
+
+1. In Path 1, click the **+** icon to add a step.
+2. Select **Add a flow activity → Generative prompt**.
+3. Rename it to `Not-Eligible prompt` (click the node name to edit).
+4. In the configuration panel:
+
+   **System prompt:**
+   ```
+   You are an assistant that generates the final confirmation message for a license swap application. Your task is to take the provided user details (license number, full name, date of birth, nationality, date of issue, and date of expiration) and produce a complete, ready-to-send message. Do not provide instructions or code, only return the final text output.
+   ```
+
+5. Add the following **inputs** by clicking **Add +** → **String** for each:
+   - `full_name` — map to `Document extractor → full_name`
+   - `nationality` — map to `Document extractor → nationality`
+
+![Workflow canvas overview](images/step5-Not-Eligible-Path.png)
+
+6. **User prompt:**
+
+   ```
+   Generate a message using the following details:
+   Full Name: {self.input.full_name}
+   Nationality: {self.input.nationality}
+   
+   
+   The message should:
+   - Start with a greeting addressing the customer by their full name.
+   - Politely inform the customer that, based on their details, they are not eligible for a license swap at this time.
+   - Advise the customer to contact or visit the center for further assistance and to discuss available options.
+   - Avoid stating a specific reason for ineligibility.
+   - Do NOT include a reference number.
+   - Do NOT confirm any request as submitted.
+   - Maintain a respectful and supportive tone.
+   - End with the company name: Road and Transportation Authority.
+   ```
+
+7. Click **Generate Preview** to verify the output looks correct.
+8. Close the Generative prompt panel.
+
+---
 ### 5.9 Map Both Generative Prompts to the Output Node
 
 Both paths feed into a single **Output** node. You need to map each generative prompt's output to a named output variable.
