@@ -303,25 +303,25 @@ Path 2 (the default/else path) handles eligible nationalities. Here you will add
 
    ```
    Generate a confirmation message using the following details:
-
-Full Name: {self.input.full_name}
-
-Nationality: {self.input.nationality}
-
-Issue Date: {self.input.issue_date}
-
-Expiry Date: {self.input.expiry_date}
-
-Birth Date: {self.input.birth_date}
-
-The message should:
-
-- Start with a greeting and thanking the full name of the customer
-- Confirm that the User is eligible for license swap.
-- Confirm that the license swap request was submitted successfully.
-- Include a random 8-digit reference number.
-- State that one of our agents will contact the customer for the next steps.
-- End with the company name: Road and Transportation Authority.
+   
+   Full Name: {self.input.full_name}
+   
+   Nationality: {self.input.nationality}
+   
+   Issue Date: {self.input.issue_date}
+   
+   Expiry Date: {self.input.expiry_date}
+   
+   Birth Date: {self.input.birth_date}
+   
+   The message should:
+   
+   - Start with a greeting and thanking the full name of the customer
+   - Confirm that the User is eligible for license swap.
+   - Confirm that the license swap request was submitted successfully.
+   - Include a random 8-digit reference number.
+   - State that one of our agents will contact the customer for the next steps.
+   - End with the company name: Road and Transportation Authority.
    ```
 
 7. Click **Generate Preview** to verify the output looks correct.
