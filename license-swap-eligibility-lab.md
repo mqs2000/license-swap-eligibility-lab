@@ -253,7 +253,7 @@ Path 1 uses a **Generative prompt** to produce a personalised not-eligible respo
 6. **User prompt:**
 
    ```
-   Generate a message using the following details:
+Generate a message using the following details:
 Full Name: {self.input.full_name}
 Nationality: {self.input.nationality}
 
