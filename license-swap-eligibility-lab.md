@@ -201,6 +201,10 @@ You are now in the agentic workflow canvas.
    - **Path 1** (if condition)
    - **Path 2** (default / else)
 
+Your canvas should now look like this:
+
+![Workflow canvas overview](images/step5-canvas-overview.png)
+
 ---
 
 ### 5.6 Configure Path 1 — Ineligible Nationalities
@@ -235,23 +239,48 @@ Path 1 will route users whose nationality does **not** qualify for a license swa
 
 ---
 
-### 5.7 Add the Not-Eligible Message (Path 1)
+### 5.7 Add a Generative Prompt for the Not-Eligible Path (Path 1)
+
+Instead of a plain message, Path 1 uses a **Generative prompt** to produce a personalised not-eligible response.
 
 1. In Path 1, click the **+** icon to add a step.
-2. Select **Present to user → Message**.
-3. In the right panel, enter:
+2. Select **Add a flow activity → Generative prompt**.
+3. Rename it to `Generative prompt neg` (click the node name to edit).
+4. In the configuration panel:
+
+   **System prompt:**
+   ```
+   You are an assistant that generates a polite not-eligible message for a license swap application. Your task is to inform the user that their nationality does not qualify for a UAE license swap and advise them to visit a branch. Do not provide instructions or code, only return the final text output.
+   ```
+
+5. Add the following **inputs** by clicking **Add +** → **String** for each:
+   - `full_name` — map to `Document extractor → full_name`
+   - `nationality` — map to `Document extractor → nationality`
+
+6. **User prompt:**
 
    ```
-   This country is not eligible for a license swap. Please visit the branch for further assistance.
+   Generate a polite not-eligible message using the following details:
+
+   Full Name: {full_name}
+
+   Nationality: {nationality}
+
+   The message should:
+   - Address the customer by their full name.
+   - State that their nationality is not eligible for a UAE license swap.
+   - Advise them to visit the nearest RTA branch for further assistance.
+   - End with the company name: Road and Transportation Authority.
    ```
+
+7. Click **Generate Preview** to verify the output looks correct.
+8. Close the Generative prompt panel.
 
 ---
 
 ### 5.8 Configure Path 2 (Default) — Generate Confirmation Message
 
 Path 2 (the default/else path) handles eligible nationalities. Here you will add a **Generative prompt** to compose a personalised confirmation message.
-
-#### Add a Generative Prompt
 
 1. In Path 2, click **+** to add a step.
 2. Select **Add a flow activity → Generative prompt**.
@@ -295,18 +324,25 @@ Path 2 (the default/else path) handles eligible nationalities. Here you will add
 6. Click **Generate Preview** to verify the output looks correct.
 7. Close the Generative prompt panel.
 
-#### Display the Generated Message
+---
 
-1. Still in Path 2, click **+** below the Generative prompt step.
-2. Select **Present to user → Message**.
-3. In the Output message field, click the **variable picker** (`{x}` icon).
-4. Navigate to **Generative prompt → value** and select it.
+### 5.9 Map Both Generative Prompts to the End Node
 
-   This inserts the AI-generated confirmation message as the output displayed to the user.
+Both paths feed into a single **End** node. You need to map each generative prompt's output to a named output variable.
+
+1. Click the **End** node on the canvas.
+2. In the **Map data for 'End'** panel that opens, you will see two output fields: `result` and `result_neg`.
+3. Map them as follows:
+   - `result` → click the variable picker and select **Generative prompt → value**
+   - `result_neg` → click the variable picker and select **Generative prompt neg → value**
+
+![Map data for End – output mapping](images/step5-map-outputs.png)
+
+4. Click **Apply** (or close the panel — changes are saved automatically).
 
 ---
 
-### 5.9 Save and Exit the Workflow
+### 5.10 Save and Exit the Workflow
 
 1. Confirm the workflow shows **Saved** in the top bar.
 2. Click **Done** (top-right) to return to the agent configuration.
@@ -354,13 +390,15 @@ Path 2 (the default/else path) handles eligible nationalities. Here you will add
    ▼
 [Branch 1]
    ├── Path 1 (if nationality is ineligible)
-   │       └── [User Activity 3]
-   │               └── Message 3: "This country is not eligible..."
+   │       └── [Generative Prompt neg] ← generates personalised not-eligible message
    │
    └── Path 2 / default (eligible)
-           ├── [Generative Prompt] ← generates personalised confirmation
-           └── [User Activity 2]
-                   └── Message 2: {generative_prompt.value}
+           └── [Generative Prompt] ← generates personalised confirmation
+   │
+   ▼
+[End]
+   ├── result     ← Generative Prompt.value
+   └── result_neg ← Generative Prompt neg.value
 ```
 
 ---
