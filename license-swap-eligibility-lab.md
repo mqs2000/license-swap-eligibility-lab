@@ -210,18 +210,22 @@ You are now in the agentic workflow canvas.
 Path 1 will route users whose nationality does **not** qualify for a license swap.
 
 1. Click on **Branch 1**, then click **Edit condition** next to **Path 1**.
-2. Click **+**.
-3. 
+
+![Workflow canvas overview](images/step5-Edit-condition.png)
+
+3. Click **+**.
+4. 
    - Flow Variables → **Document extractor** → `nationality`
+
+![Workflow canvas overview](images/step5-Edit-condition-details.png)
+     
    - Operator: `==`
    - Value: `Cameroonian`
-  
-![Workflow canvas overview](images/step5-Branch.png)
 
 4. Click **+** again, change the logical operator to **or**, and add:
    - `nationality == Indian`
 
-![Workflow canvas overview](images/step5-Branch.png)
+![Workflow canvas overview](images/step5-Edit-condition-or.png)
 
 5. Repeat to add:
    - `nationality == Pakistani`
@@ -247,7 +251,7 @@ Path 1 uses a **Generative prompt** to produce a personalised not-eligible respo
    - `full_name` — map to `Document extractor → full_name`
    - `nationality` — map to `Document extractor → nationality`
 
-![Workflow canvas overview](images/step5-Branch.png)
+![Workflow canvas overview](images/step5-Not-Eligible-Path.png)
 
 6. **User prompt:**
 
@@ -291,6 +295,8 @@ Path 2 (the default/else path) handles eligible nationalities. Here you will add
    - `full_name` — map to `Document extractor → full_name`
    - `nationality` — map to `Document extractor → nationality`
 
+![Workflow canvas overview](images/step5-Eligible-Path-String.png)
+
    **Add +** → **date** for:
    - `issue_date` — map to `Document extractor → date_of_issue`
    - `expiry_date` — map to `Document extractor → date_of_expiration`
@@ -301,22 +307,24 @@ Path 2 (the default/else path) handles eligible nationalities. Here you will add
    ```
    Generate a confirmation message using the following details:
 
-   Full Name: {full_name}
+Full Name: {self.input.full_name}
 
-   Nationality: {nationality}
+Nationality: {self.input.nationality}
 
-   Issue Date: {issue_date}
+Issue Date: {self.input.issue_date}
 
-   Expiry Date: {expiry_date}
+Expiry Date: {self.input.expiry_date}
 
-   Birth Date: {birth_date}
+Birth Date: {self.input.birth_date}
 
-   The message should:
-   - Start with a greeting and thanking the full name of the customer
-   - Confirm that the license swap request was submitted successfully.
-   - Include a random 8-digit reference number.
-   - State that one of our agents will contact the customer for the next steps.
-   - End with the company name: Road and Transportation Authority.
+The message should:
+
+- Start with a greeting and thanking the full name of the customer
+- Confirm that the User is eligible for license swap.
+- Confirm that the license swap request was submitted successfully.
+- Include a random 8-digit reference number.
+- State that one of our agents will contact the customer for the next steps.
+- End with the company name: Road and Transportation Authority.
    ```
 
 7. Click **Generate Preview** to verify the output looks correct.
@@ -332,18 +340,17 @@ Both paths feed into a single **Output** node. You need to map each generative p
 2. Click **Add** → **String**:
    - Name: Eligible.
    - Click **Add**
-
-   ![Map data for End – output mapping](images/step5-map-outputs.png)
-   
 4. Repeat the same thing for Not-Eligible output Click **Add** → **String**:
    - Name: Not-Eligible.
    - Click **Add** 
-
 5. Click **Edit data mapping**
-6. Click on **{x}** for Eligible
+
+![Map data for End – output mapping](images/step6-edit-map.png)
+
+7. Click on **{x}** for Eligible
    - From Flow Varibales choose **Eligbile** → **Value**.
 
-   ![Map data for End – output mapping](images/step5-map-outputs.png)
+   ![Map data for End – output mapping](images/step6-map-x.png)
    
 8. Do the same for Not-Eligible Click on **{x}**.
    - From Flow Varibales choose **Not-Eligible** → **Value**.
