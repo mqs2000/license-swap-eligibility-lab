@@ -245,15 +245,14 @@ Path 2 handles eligible nationalities and generates a personalised confirmation 
 
 1. In **Path 2**, click **+** to add a step.
 2. Select **Add a flow activity → Generative prompt**.
-3. Rename it to `Eligible prompt`.
-4. Enter the following:
+3. Enter the following:
 
    **System prompt:**
    ```
    You are an assistant that generates the final confirmation message for a license swap application. Your task is to take the provided user details (license number, full name, date of birth, nationality, date of issue, and date of expiration) and produce a complete, ready-to-send message. Do not provide instructions or code, only return the final text output.
    ```
 
-5. Add the following inputs. Click **Add +** → **String** for:
+4. Add the following inputs. Click **Add +** → **String** for:
    - `full_name` — map to `Document extractor → full_name`
    - `nationality` — map to `Document extractor → nationality`
 
@@ -264,7 +263,7 @@ Path 2 handles eligible nationalities and generates a personalised confirmation 
 
 ![Eligible prompt inputs](assets/images/step5-Eligible-Path-String.png)
 
-6. **User prompt:**
+5. **User prompt:**
 
    ```
    Generate a confirmation message using the following details:
@@ -284,8 +283,9 @@ Path 2 handles eligible nationalities and generates a personalised confirmation 
    - End with the company name: Road and Transportation Authority.
    ```
 
-7. Click **Generate Preview** to check the output looks correct.
-8. Close the panel.
+6. Click **Generate Preview** to check the output looks correct.
+7. Close the panel.
+8. Rename it to `Eligible prompt`.
 
 ---
 
@@ -295,21 +295,20 @@ Path 1 generates a polite message informing the user they are not eligible.
 
 1. In **Path 1**, click **+** to add a step.
 2. Select **Add a flow activity → Generative prompt**.
-3. Rename it to `Not-Eligible prompt`.
-4. Enter the following:
+3. Enter the following:
 
    **System prompt:**
    ```
    You are an assistant that generates the final confirmation message for a license swap application. Your task is to take the provided user details (license number, full name, date of birth, nationality, date of issue, and date of expiration) and produce a complete, ready-to-send message. Do not provide instructions or code, only return the final text output.
    ```
 
-5. Add the following inputs. Click **Add +** → **String** for:
+4. Add the following inputs. Click **Add +** → **String** for:
    - `full_name` — map to `Document extractor → full_name`
    - `nationality` — map to `Document extractor → nationality`
 
 ![Not-eligible prompt inputs](assets/images/step5-Not-Eligible-Path.png)
 
-6. **User prompt:**
+5. **User prompt:**
 
    ```
    Generate a message using the following details:
@@ -328,8 +327,9 @@ Path 1 generates a polite message informing the user they are not eligible.
    - End with the company name: Road and Transportation Authority.
    ```
 
-7. Click **Generate Preview** to check the output looks correct.
-8. Close the panel.
+6. Click **Generate Preview** to check the output looks correct.
+7. Close the panel.
+8. Rename it to `Not-Eligible prompt`.
 
 ---
 
