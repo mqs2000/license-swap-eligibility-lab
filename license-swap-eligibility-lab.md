@@ -303,8 +303,8 @@ Path 1 generates a polite message informing the user they are not eligible.
    ```
 
 4. Add the following inputs. Click **Add +** → **String** for:
-   - name: `full_name` 
-   - name: `nationality` 
+   - `full_name` 
+   - `nationality` 
 
 ![Not-eligible prompt inputs](assets/images/step5-Not-Eligible-Path.png)
 
