@@ -17,7 +17,7 @@ The agent walks the user through the process step by step:
 
 ## Prerequisites
 
-- An IBM Cloud account. You can sign up for free here: https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753
+- An IBM watsonx Orchestrate Cloud account. You can sign up for free here: https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753
 
 ---
 
@@ -253,13 +253,13 @@ Path 2 handles eligible nationalities and generates a personalised confirmation 
    ```
 
 4. Add the following inputs. Click **Add +** → **String** for:
-   - `full_name` — map to `Document extractor → full_name`
-   - `nationality` — map to `Document extractor → nationality`
+   - name: `full_name` 
+   - name: `nationality` 
 
    Click **Add +** → **Date** for:
-   - `issue_date` — map to `Document extractor → date_of_issue`
-   - `expiry_date` — map to `Document extractor → date_of_expiration`
-   - `birth_date` — map to `Document extractor → date_of_birth`
+   - name: `issue_date` 
+   - name: `expiry_date` 
+   - name: `birth_date` 
 
 ![Eligible prompt inputs](assets/images/step5-Eligible-Path-String.png)
 
@@ -303,8 +303,8 @@ Path 1 generates a polite message informing the user they are not eligible.
    ```
 
 4. Add the following inputs. Click **Add +** → **String** for:
-   - `full_name` — map to `Document extractor → full_name`
-   - `nationality` — map to `Document extractor → nationality`
+   - name: `full_name` 
+   - name: `nationality` 
 
 ![Not-eligible prompt inputs](assets/images/step5-Not-Eligible-Path.png)
 
