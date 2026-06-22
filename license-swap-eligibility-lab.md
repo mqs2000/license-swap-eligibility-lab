@@ -253,13 +253,13 @@ Path 2 handles eligible nationalities and generates a personalised confirmation 
    ```
 
 4. Add the following inputs. Click **Add +** → **String** for:
-   - name: `full_name` 
-   - name: `nationality` 
+   - `full_name` 
+   - `nationality` 
 
    Click **Add +** → **Date** for:
-   - name: `issue_date` 
-   - name: `expiry_date` 
-   - name: `birth_date` 
+   - `issue_date` 
+   - `expiry_date` 
+   - `birth_date` 
 
 ![Eligible prompt inputs](assets/images/step5-Eligible-Path-String.png)
 
